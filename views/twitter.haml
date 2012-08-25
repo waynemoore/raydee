@@ -1,0 +1,9 @@
+- if twitter
+  %div{:class => ['twitter', 'content-block']}
+    %section
+      .content
+        %img{:src => "#{twitter[:data].user.profile_image_url}"}
+        .text= twitter[:data].text
+      .meta
+        = "@#{twitter[:data].user.screen_name}:"
+        = Time.at(twitter[:timestamp])

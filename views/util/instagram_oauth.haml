@@ -1,0 +1,36 @@
+!!!
+%html
+  %head
+    :css
+      label {
+        display: block;
+      }
+      input[type=text] {
+        width: 500px;
+      }
+      
+  %body
+    %h1 Instagram OAuth Util
+
+    - if @access_token
+      %h2 OAuth Access Token
+      %p= @access_token
+
+    %h2 Client Info    
+    %form{:method => "post", :action => ""}
+
+      %label
+        Client ID:
+        %input{:type => "text", :name => "client_id"}
+
+      %label
+        Client Secret:
+        %input{:type => "text", :name => "client_secret"}
+        
+      %label
+        Redirect URI:
+        %input{:type => "text", :name => "redirect_uri", :value => "http://localhost:4567/util/instagram/oauth"}
+
+      %div      
+        %button{:type => "submit"} submit
+     

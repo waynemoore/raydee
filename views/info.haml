@@ -1,0 +1,3 @@
+.info
+  - @info_widgets.each do |widget|
+    = haml widget.name.to_sym, :locals => {:widget => widget}

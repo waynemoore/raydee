@@ -1,0 +1,17 @@
+!!!
+%html
+  %head
+    %title Dashboard
+    %link{:rel => "stylesheet", :href => "/assets/style.sass", :type => "text/css", :media => "screen"}
+    %script{:src => "/assets/jquery-1.7.1.min.js", :type => "text/javascript"}
+    %script{:src => "/assets/dashboard.js?#{Time.now.to_i}", :type => "text/javascript"}
+  %body
+    .container
+      = haml :info
+      = haml :social
+    .settings
+      %label
+        Auto-reload:
+        %input{:type => :checkbox, :id => :refresh, :checked => (:checked if @config[:auto_reload])}
+    .debug
+      %div{:id => :time}

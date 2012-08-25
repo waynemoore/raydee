@@ -1,0 +1,9 @@
+- if instagram
+  %div{:class => ['instagram', 'content-block']}
+    %section
+      .content
+        %img{:src => instagram[:data]['images']['low_resolution']['url']}
+      .meta
+        = instagram[:data]['user']['username']
+        |
+        = Time.at(instagram[:timestamp])

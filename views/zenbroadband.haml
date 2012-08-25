@@ -1,0 +1,15 @@
+- if widget
+  - broadband = widget.data
+  .broadband
+    %h3 Broadband
+    %section
+      %table
+        %tr
+          %td Used
+          %td= broadband[:percent_used]
+        %tr
+          %td Downloaded
+          %td= broadband[:downloaded]
+        %tr
+          %td Remaining
+          %td= broadband[:remaining]

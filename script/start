@@ -1,0 +1,2 @@
+cd ~/dashboard/current
+bundle exec ruby raydee.rb &

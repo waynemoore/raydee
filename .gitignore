@@ -1,0 +1,8 @@
+.\#*
+
+/vendor
+/data
+/log
+/.sass-cache
+/tmp
+/config/services

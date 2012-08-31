@@ -1,9 +1,11 @@
+$:.unshift File.join(File.absolute_path(File.dirname(__FILE__)), "lib")
+
 require 'sinatra'
 require 'sinatra/reloader'
-require_relative 'store'
-require_relative 'services'
-require_relative 'widgets'
-require_relative 'utils'
+require 'store'
+require 'services'
+require 'widgets'
+require 'utils'
 
 enable :sessions
 

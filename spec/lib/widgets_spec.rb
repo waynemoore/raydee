@@ -1,4 +1,4 @@
-require_relative "../widgets.rb"
+require "widgets.rb"
 
 describe ZenBroadbandWidget do
 

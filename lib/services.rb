@@ -1,5 +1,8 @@
 require 'twitter'
 require 'yaml'
+$:.unshift File.absolute_path(File.join(File.dirname(__FILE__), "../"))
+
+require 'config/raydee.rb'
 
 
 class Service
@@ -17,7 +20,7 @@ class Service
   end
 
   def self.config_path file_name
-    File.expand_path(File.join(File.dirname(__FILE__), 'config/services/', file_name))
+    File.join(CONFIG_ROOT, "services", file_name)
   end
 
 end

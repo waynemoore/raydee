@@ -1,4 +1,4 @@
-require_relative "../store.rb"
+require "store.rb"
 
 describe Store do
 
@@ -9,7 +9,7 @@ describe Store do
   end
 
   context "instance" do
-    
+
     before(:each) do
       @store = Store.new :foo
     end
@@ -49,5 +49,5 @@ describe Store do
     end
 
   end
-    
+
 end

@@ -5,6 +5,8 @@ require 'sinatra/reloader'
 require 'store'
 require 'services'
 require 'widgets'
+require 'instagram_utils'
+require 'config/raydee'
 require 'utils'
 
 enable :sessions
@@ -13,23 +15,19 @@ CONFIG = {
   :auto_reload => `hostname` =~ /aztec/
 }
 
-SERVICES = [TwitterConnector, InstagramConnector]
-WIDGETS = [ZenBroadbandWidget]
-
-def initialize
-  also_reload path_to('store.rb')
-  also_reload path_to('utils.rb')
-end
+Dir.glob(File.join(APP_ROOT, "lib", "*.rb")).map {|fn| also_reload fn}
 
 get "/" do
+  all_services = load_services
+
   text_store = Store.new :text
   image_store = Store.new :images
 
-  SERVICES.each do |service_klass|
+  all_services[:services].each do |service_klass|
     service_klass.new.update text_store, image_store
   end
 
-  @info_widgets = WIDGETS.map { |klass|  klass.new }
+  @info_widgets = all_services[:widgets].map { |klass|  klass.new }
   @social_widgets = text_store.items + image_store.items
   @config = CONFIG
 
@@ -38,10 +36,4 @@ end
 
 get "/assets/style.sass" do
   scss :style
-end
-
-private
-
-def path_to file
-  File.join(File.absolute_path(File.dirname(__FILE__)), file)
 end

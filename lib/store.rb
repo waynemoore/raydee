@@ -5,7 +5,6 @@ require 'json'
 class InvalidIdException < Exception
 end
 
-
 class Store
 
   attr_accessor :name

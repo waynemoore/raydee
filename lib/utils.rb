@@ -1,40 +1,16 @@
-require 'rest_client'
+require 'yaml'
+require 'config/raydee'
+require 'services'
+require 'widgets'
 
-get "/util/instagram/oauth" do
-  if params.has_key? "code"
-    oauth_params = {
-      "client_id" => client_id,
-      "client_secret" => secret_id,
-      "grant_type" => "authorization_code",
-      "redirect_uri" => redirect_uri,
-      "code" => params["code"],
-    }
-    @access_token = RestClient.post("https://api.instagram.com/oauth/access_token", oauth_params)
-  end
-  haml :"util/instagram_oauth"
+def load_services
+  names = YAML::load(File.read(File.join(CONFIG_ROOT, "services", "installed.yml")))
+  {
+    :services => names[:services] ? strings_to_classes(names[:services]) : [],
+    :widgets => names[:widgets] ? strings_to_classes(names[:widgets]) : [],
+  }
 end
 
-post "/util/instagram/oauth" do
-  (session[:client_info] ||= {}).tap do |client|
-    params.each do |key, val|
-      client[key.to_sym] = val
-    end
-  end
-  AUTH_URL = "https://api.instagram.com/oauth/authorize/?client_id=#{client_id}&redirect_uri=#{redirect_uri}&response_type=code"
-  redirect AUTH_URL
-end
-
-
-private
-
-def client_id
-  session[:client_info][:client_id]
-end
-
-def secret_id
-  session[:client_info][:client_secret]
-end
-
-def redirect_uri
-  session[:client_info][:redirect_uri]
+def strings_to_classes strings
+  strings.map {|string| Kernel.const_get string }
 end

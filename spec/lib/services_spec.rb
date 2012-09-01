@@ -1,5 +1,6 @@
-require "services.rb"
-require "store.rb"
+require 'spec_helper'
+require 'services'
+require 'store'
 
 
 describe Service do

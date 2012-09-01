@@ -1,8 +1,6 @@
 require 'twitter'
 require 'yaml'
-$:.unshift File.absolute_path(File.join(File.dirname(__FILE__), "../"))
-
-require 'config/raydee.rb'
+require 'config/raydee'
 
 
 class Service

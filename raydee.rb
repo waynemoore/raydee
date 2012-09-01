@@ -1,3 +1,4 @@
+$:.unshift File.join(File.absolute_path(File.dirname(__FILE__)), ".")
 $:.unshift File.join(File.absolute_path(File.dirname(__FILE__)), "lib")
 
 require 'sinatra'

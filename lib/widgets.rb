@@ -1,5 +1,6 @@
-require_relative "./services.rb"
+require 'services'
 require 'mechanize'
+
 
 class ZenBroadbandWidget < WidgetService
 

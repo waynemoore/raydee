@@ -1,4 +1,6 @@
-require "widgets.rb"
+require 'spec_helper'
+require 'widgets'
+
 
 describe ZenBroadbandWidget do
 

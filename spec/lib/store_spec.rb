@@ -1,4 +1,6 @@
-require "store.rb"
+require 'spec_helper'
+require 'store'
+
 
 describe Store do
 

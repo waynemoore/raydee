@@ -67,7 +67,7 @@ class TwitterConnector < MediaService
   end
 
   def statuses
-    Twitter.list_timeline(:slug => "watch", :include_entities => true)
+    Twitter.list_timeline(:slug => @config[:list], :include_entities => true)
   end
 
 end

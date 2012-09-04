@@ -29,7 +29,10 @@ get "/" do
   end
 
   @info_widgets = all_services[:widgets].map { |klass|  klass.new }
-  @social_widgets = text_store.items + image_store.items
+  @social_widgets = {
+    :text => text_store.items,
+    :images => image_store.items,
+  }
   @config = CONFIG
 
   haml :index

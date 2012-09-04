@@ -2,12 +2,10 @@
 
   .img-stream
     %h3 Image Stream
-    - @social_widgets.each do |widget|
-      - if widget[:type] != :twitter
-        = haml widget[:type], :locals => { widget[:type] => widget }
+    - @social_widgets[:images].each do |widget|
+      = haml widget[:type], :locals => { widget[:type] => widget }
 
   .text-stream
     %h3 Text Stream
-    - @social_widgets.each do |widget|
-      - if widget[:type] == :twitter
-        = haml widget[:type], :locals => { widget[:type] => widget }
+    - @social_widgets[:text].each do |widget|
+      = haml widget[:type], :locals => { widget[:type] => widget }

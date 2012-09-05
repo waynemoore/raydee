@@ -3,7 +3,7 @@ require 'yaml'
 require 'config/raydee'
 
 
-class Service
+class Configurable
 
   attr_accessor :name, :config
 
@@ -24,25 +24,7 @@ class Service
 end
 
 
-class MediaService < Service
-
-  def update(text_store, image_store)
-    raise NotImplementedError
-  end
-
-end
-
-
-class WidgetService < Service
-
-  def data
-    raise NotImplementedError
-  end
-
-end
-
-
-class TwitterConnector < MediaService
+class TwitterConnector < Configurable
 
   attr_accessor :config
 
@@ -73,7 +55,7 @@ class TwitterConnector < MediaService
 end
 
 
-class InstagramConnector < MediaService
+class InstagramConnector < Configurable
 
   attr_accessor :access_token
 

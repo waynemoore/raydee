@@ -2,7 +2,7 @@ require 'services'
 require 'mechanize'
 
 
-class ZenBroadbandWidget < WidgetService
+class ZenBroadbandWidget < Configurable
 
   def initialize
     super "zenbroadband"

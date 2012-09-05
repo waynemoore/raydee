@@ -3,12 +3,12 @@ require 'services'
 require 'store'
 
 
-describe Service do
+describe Configurable do
 
   it "should read the config from a YAML file" do
     File.should_receive(:read).with("/config/path/blegga.yml").and_return("---\n:foo: bar")
-    Service.should_receive(:config_path).with("blegga.yml").and_return("/config/path/blegga.yml")
-    Service.new('blegga')
+    Configurable.should_receive(:config_path).with("blegga.yml").and_return("/config/path/blegga.yml")
+    Configurable.new('blegga')
   end
 
 end

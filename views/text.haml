@@ -1,8 +1,8 @@
-%div{:class => [text[:type], 'content-block']}
+%div{:class => [text.type, 'content-block']}
   %section
     .content
-      %img{:src => text[:user][:pic_url]}
-      .text= text[:text]
+      %img{:src => text.user[:pic_url]}
+      .text= text.text
     .meta
-      = "@#{text[:user][:name]}"
-      = Time.at(text[:timestamp])
+      = "@#{text.user[:name]}"
+      = Time.at(text.timestamp)

@@ -38,23 +38,28 @@ class TwitterConnector < Configurable
     end
   end
 
+  #TODO -- remove duplicate user definition
   def update(text_store, image_store)
     statuses.each do |status|
-      text_store.put(status.id, {
-        :type => :twitter,
-        :timestamp => Time.at(status.created_at),
-        :user => {
-          :name => status.user.screen_name,
-          :pic_url => status.user.profile_image_url,
-        },
-        :text => status.text,
-        :data => status
-      })
+      text = self.class.status_to_text(status)
+      text_store.put(text.id, text)
     end
   end
 
   def statuses
     Twitter.list_timeline(:slug => @config[:list], :include_entities => true)
+  end
+
+  private
+
+  def self.status_to_text(status)
+    timestamp = Time.at(status.created_at)
+    user = {
+      :name => status.user.screen_name,
+      :pic_url => status.user.profile_image_url,
+    }
+
+    Text.new status.id, :twitter, timestamp, user, status.text, status
   end
 
 end
@@ -71,16 +76,9 @@ class InstagramConnector < Configurable
 
   def update(text_store, image_store)
     feed.each do |status|
-      image_store.put(status['id'], {
-        :type => :instagram,
-        :timestamp => Time.at(status['created_time'].to_i),
-        :user => {
-          :name => status['user']['username'],
-          :pic_url => nil,
-        },
-        :image_url => status['images']['low_resolution']['url'],
-        :data => status
-      })
+      image = InstagramConnector.status_to_image(status)
+      # TODO: image store should know how to find the id
+      image_store.put(image.id, image)
     end
   end
 
@@ -88,6 +86,52 @@ class InstagramConnector < Configurable
     response = RestClient.get("https://api.instagram.com/v1/users/self/feed?access_token=#{access_token}")
     json = JSON.load(response)
     json["data"]
+  end
+
+  private
+
+  def self.status_to_image(status)
+    id = status['id']
+    timestamp = Time.at(status['created_time'].to_i)
+    image_url = status['images']['low_resolution']['url']
+    user = {
+      :name => status['user']['username'],
+      :pic_url => nil,
+    }
+
+    Image.new(id, :instagram, timestamp, user, image_url, status)
+  end
+
+end
+
+
+class Image
+
+  attr_accessor :id, :type, :timestamp, :user, :image_url, :data
+
+  def initialize id, type, timestamp, user, image_url, data
+    @id = id
+    @type = type
+    @timestamp = timestamp
+    @user = user
+    @image_url = image_url
+    @data = data
+  end
+
+end
+
+
+class Text
+
+  attr_accessor :id, :type, :timestamp, :user, :text, :data
+
+  def initialize id, type, timestamp, user, text, data
+    @id = id
+    @type = type
+    @timestamp = timestamp
+    @user = user
+    @text = text
+    @data = data
   end
 
 end

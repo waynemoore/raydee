@@ -23,8 +23,8 @@ describe TwitterConnector do
 
   it "should update the text store" do
     status = double()
-    status.stub!(:id).and_return('twitter-12345')
-    status.stub!(:created_at).and_return(1345328503)
+    status.stub(:id).and_return('twitter-12345')
+    status.stub(:created_at).and_return(1345328503)
     status.stub_chain(:user, :screen_name).and_return('foo')
     status.stub_chain(:user, :profile_image_url).and_return('url')
     status.stub(:text).and_return('status update')
@@ -34,12 +34,12 @@ describe TwitterConnector do
 
     text_item = @text_store.get('twitter-12345')
     text_item.should_not be_nil
-    text_item[:type].should == :twitter
-    text_item[:data].should == status
-    text_item[:timestamp].should == Time.at(1345328503)
-    text_item[:user][:name].should == 'foo'
-    text_item[:user][:pic_url].should == 'url'
-    text_item[:text].should == 'status update'
+    text_item.type.should == :twitter
+    text_item.data.should == status
+    text_item.timestamp.should == Time.at(1345328503)
+    text_item.user[:name].should == 'foo'
+    text_item.user[:pic_url].should == 'url'
+    text_item.text.should == 'status update'
   end
 
   it "should read config from file" do
@@ -62,23 +62,23 @@ describe InstagramConnector do
 
   it "should update the image store" do
     data = double()
-    data.stub!(:[]).and_return(nil)
-    data.stub!(:[]).with('id').and_return('instagram-12345')
-    data.stub!(:[]).with('created_time').and_return('1296748524')
-    data.stub!(:[]).with('user').and_return({'username' => 'foo'})
-    data.stub!(:[]).with('images').and_return({'low_resolution' => {'url' => 'url'}})
+    data.stub(:[]).and_return(nil)
+    data.stub(:[]).with('id').and_return('instagram-12345')
+    data.stub(:[]).with('created_time').and_return('1296748524')
+    data.stub(:[]).with('user').and_return({'username' => 'foo'})
+    data.stub(:[]).with('images').and_return({'low_resolution' => {'url' => 'url'}})
 
-    @instagram.stub!(:feed).and_return([data])
+    @instagram.stub(:feed).and_return([data])
     @instagram.update(nil, @image_store)
 
     image_item = @image_store.get('instagram-12345')
     image_item.should_not be_nil
-    image_item[:type].should == :instagram
-    image_item[:data].should == data
-    image_item[:timestamp].should == Time.at(1296748524)
-    image_item[:user][:name].should == 'foo'
-    image_item[:user][:pic_url].should be_nil
-    image_item[:image_url].should == 'url'
+    image_item.type.should == :instagram
+    image_item.data.should == data
+    image_item.timestamp.should == Time.at(1296748524)
+    image_item.user[:name].should == 'foo'
+    image_item.user[:pic_url].should be_nil
+    image_item.image_url.should == 'url'
   end
 
 end

@@ -9,7 +9,7 @@ describe ZenBroadbandWidget do
       :username => "foo",
       :password => "bar",
     }
-    ZenBroadbandWidget.stub!(:read_config).and_return(config)
+    ZenBroadbandWidget.stub(:read_config).and_return(config)
   end
 
   it "should read username and password from config" do

@@ -43,6 +43,11 @@ class TwitterConnector < Configurable
       text_store.put(status.id, {
         :type => :twitter,
         :timestamp => Time.at(status.created_at),
+        :user => {
+          :name => status.user.screen_name,
+          :pic_url => status.user.profile_image_url,
+        },
+        :text => status.text,
         :data => status
       })
     end
@@ -65,11 +70,16 @@ class InstagramConnector < Configurable
   end
 
   def update(text_store, image_store)
-    feed.each do |data|
-      image_store.put(data['id'], {
+    feed.each do |status|
+      image_store.put(status['id'], {
         :type => :instagram,
-        :timestamp => Time.at(data['created_time'].to_i),
-        :data => data
+        :timestamp => Time.at(status['created_time'].to_i),
+        :user => {
+          :name => status['user']['username'],
+          :pic_url => nil,
+        },
+        :image_url => status['images']['low_resolution']['url'],
+        :data => status
       })
     end
   end

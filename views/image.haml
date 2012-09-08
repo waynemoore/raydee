@@ -1,0 +1,8 @@
+%div{:class => [image[:type], 'content-block']}
+  %section
+    .content
+      %img{:src => image[:image_url]}
+    .meta
+      = image[:user][:name]
+      |
+      = Time.at(image[:timestamp])

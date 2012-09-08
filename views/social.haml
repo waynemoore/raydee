@@ -2,10 +2,10 @@
 
   .img-stream
     %h3 Image Stream
-    - @social_widgets[:images].each do |widget|
-      = haml widget[:type], :locals => { widget[:type] => widget }
+    - @images.each do |image|
+      = haml :image, :locals => { :image => image }
 
   .text-stream
     %h3 Text Stream
-    - @social_widgets[:text].each do |widget|
-      = haml widget[:type], :locals => { widget[:type] => widget }
+    - @texts.each do |text|
+      = haml :text, :locals => { :text => text }

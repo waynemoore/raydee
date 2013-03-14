@@ -38,11 +38,10 @@ class TwitterConnector < Configurable
     end
   end
 
-  #TODO -- remove duplicate user definition
   def update(text_store, image_store)
     statuses.each do |status|
       text = self.class.status_to_text(status)
-      text_store.put(text.id, text)
+      text_store.put(text)
     end
   end
 
@@ -76,9 +75,8 @@ class InstagramConnector < Configurable
 
   def update(text_store, image_store)
     feed.each do |status|
-      image = InstagramConnector.status_to_image(status)
-      # TODO: image store should know how to find the id
-      image_store.put(image.id, image)
+      image = self.class.status_to_image(status)
+      image_store.put(image)
     end
   end
 

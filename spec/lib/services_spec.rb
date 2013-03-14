@@ -62,7 +62,6 @@ describe InstagramConnector do
 
   it "should update the image store" do
     data = double()
-    data.stub(:[]).and_return(nil)
     data.stub(:[]).with('id').and_return('instagram-12345')
     data.stub(:[]).with('created_time').and_return('1296748524')
     data.stub(:[]).with('user').and_return({'username' => 'foo'})

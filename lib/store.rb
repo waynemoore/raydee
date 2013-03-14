@@ -15,10 +15,12 @@ class Store
     @data = {}
   end
 
-  def put id, item
-    raise InvalidIdException if id.nil?
-    @list << id unless @data.include? id
-    @data[id] = item
+  def put item
+    raise ArgumentError.new("Nil items not allowed") if item.nil?
+    raise InvalidIdException if item.id.nil?
+
+    @list << item.id unless @data.include? item.id
+    @data[item.id] = item
     nil
   end
 

@@ -1,0 +1,8 @@
+NOTES
+
+- Why do we even need an ID in the store?  Does this even need to be a key-value store?
+- Trash the :data part of images and texts -- it's too tempting to use it and it'll attract service provider specific code
+- Consider splitting out instagram / twitter "services" into gems, or some form of plugin.
+- What do we want to do with the text part of image posts?  e.g. Instrgram includes a text update along with the image.
+- Passing image and text stores into the connectors for updating feels clunky.  What if we want other stores?  Then all method signatures would need to change.  Consider providing a dsl for updating the stores, or some kind of global registry.
+- Could replace Store implementation with moneta?

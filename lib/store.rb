@@ -32,4 +32,8 @@ class Store
     @list.collect { |id| @data[id] }
   end
 
+  def size
+    @list.size
+  end
+
 end

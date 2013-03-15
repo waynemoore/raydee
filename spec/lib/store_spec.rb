@@ -68,6 +68,12 @@ describe Store do
       @store.items.should == []
     end
 
+    it "should return the size of the store" do
+      @store.put(double({:id => "foo", :data => 1}))
+      @store.put(double({:id => "bar", :data => 2}))
+      @store.size.should == 2
+    end
+
   end
 
 end

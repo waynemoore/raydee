@@ -38,18 +38,27 @@ class TwitterConnector < Configurable
     end
   end
 
+  # TODO: refactor, this method is doing too much
   def update(text_store, image_store)
     statuses.each do |status|
       text = self.class.status_to_text(status)
       text_store.put(text)
+
+      entities = status.attrs[:entities][:media]
+      unless entities.nil?
+        entities.each do |entity|
+          if entity[:type] == "photo"
+            image = self.class.entity_to_image(status, entity)
+            image_store.put(image)
+          end
+        end
+      end
     end
   end
 
   def statuses
     Twitter.list_timeline(:slug => @config[:list], :include_entities => true)
   end
-
-  private
 
   def self.status_to_text(status)
     timestamp = Time.at(status.created_at)
@@ -59,6 +68,18 @@ class TwitterConnector < Configurable
     }
 
     Text.new status.id, :twitter, timestamp, user, status.text, status
+  end
+
+  def self.entity_to_image(status, entity)
+    id = entity[:id]
+    timestamp = Time.at(status.created_at)
+    image_url = "#{entity[:media_url]}:thumb"
+    user = {
+      :name => status.user.screen_name,
+      :pic_url => status.user.profile_image_url,
+    }
+
+    Image.new(id, :twitter, timestamp, user, image_url, entity)
   end
 
 end
@@ -86,15 +107,13 @@ class InstagramConnector < Configurable
     json["data"]
   end
 
-  private
-
   def self.status_to_image(status)
     id = status['id']
     timestamp = Time.at(status['created_time'].to_i)
     image_url = status['images']['low_resolution']['url']
     user = {
       :name => status['user']['username'],
-      :pic_url => nil,
+      :pic_url => status['user']['profile_picture'],
     }
 
     Image.new(id, :instagram, timestamp, user, image_url, status)
